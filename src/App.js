@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import WordDisplay from './WordDisplay';
-import MoveCounter from './MoveCounter';
-import Modal from './Modal';
-import Settings from './Settings';
+import WordDisplay from './Components/WordDisplay';
+import MoveCounter from './Components/MoveCounter';
+import Modal from './Components/Modal';
+import Settings from './Components/Settings';
 import nouns from './nouns.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 
-
 const wordList = nouns.nouns;
 
 const difficulties = {
-  beginner: { wordLengths: [3, 4], remainingMoves: 7 },
-  easy: { wordLengths: [4, 5], remainingMoves: 7 },
+  beginner: { wordLengths: [3, 4], remainingMoves: 6 },
+  easy: { wordLengths: [4, 5], remainingMoves: 5 },
   medium: { wordLengths: [6, 7], remainingMoves: 7 },
   hard: { wordLengths: [8, 9], remainingMoves: 8 },
   advanced: { wordLengths: [10, 11], remainingMoves: 8 },
 };
 
 function App() {
-  const [settings, setSettings] = useState({ wordLength: 4, moveLimit: 7 });
+  const [settings, setSettings] = useState({ wordLength: 4, moveLimit: 5 });
   const [showSettings, setShowSettings] = useState(false);
-  const maxMoves = 7;
+  const maxMoves = 5;
 
   const getRandomWord = (lengths) => {
     while (true) {
@@ -133,7 +132,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1> Letter Shift </h1>
+      <h1> Scrambled </h1>
 
       <WordDisplay
         word={currentWord}
