@@ -16,6 +16,12 @@ html, body {
   padding: 2rem;
 }
 
+.footer {
+  margin-top: 2rem;
+  font-size: 0.8rem;
+  color: #424242;
+}
+
 .App h1 {
   font-size: 2.7rem;
   color: #424242;

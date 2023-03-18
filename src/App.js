@@ -167,6 +167,10 @@ function App() {
       <Modal isOpen={showSettings} onClose={() => setShowSettings(false)}>
         <Settings onSettingsChange={handleSettingsChange} settings={settings} setCustomGame={setCustomGame} />
       </Modal>
+
+      <div className="footer">
+        <p> Made by Silas Nevstad </p>
+      </div>
     </div>
   );
 }
