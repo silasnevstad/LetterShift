@@ -1,0 +1,220 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.App h1 {
+  font-size: 2.5rem;
+  color: #424242;
+  margin-bottom: 2.5rem;
+  margin-top: 0;
+}
+
+.word-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.letter-card {
+  background-color: #2196f3;
+  color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  font-size: 2.5rem;
+  margin: 0 0.5rem;
+  cursor: grab;
+  transition: all 0.3s cubic-bezier(0.3, 1.5, 0.7, 1);
+  z-index: 1;
+  transform: translateY(0) scale(1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.letter-card:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.letter-card.hover {
+  transform: translateY(-3px) scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.letter-card.dragging {
+  cursor: grabbing;
+  z-index: 2;
+  transform: translateY(-10px) scale(1.15);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.letter-card.correct {
+  background-color: #4caf50;
+}
+
+.letter-card.win {
+  background-color: #4caf50;
+}
+
+.letter-card.lost {
+  background-color: #f44336;
+}
+
+.move-counter,
+.feedback {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  margin-top: 0.3rem;
+}
+
+button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.3, 1.5, 0.7, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 0.5rem;
+}
+
+button:hover {
+  transform: translateY(5px) scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  background-color: #1976d2;
+}
+
+.solve-btn {
+  background-color: #4caf50;
+}
+
+.solve-btn:hover {
+  background-color: #388e3c;
+  transform: translateY(2px) scale(1.02);
+}
+
+.settings-toggle {
+  /* background-color: #fff; */
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  /* font-size: 1.5rem; */
+  cursor: pointer;
+}
+
+.settings-toggle:hover {
+  transform: scale(1.1);
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.Modal-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 9px;
+  padding: 2rem;
+  min-width: 300px;
+  max-width: 100%;
+  z-index: 1001;
+}
+
+
+.Settings {
+  margin-bottom: 2rem;
+}
+  
+.Settings h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+  
+.Settings div {
+  margin-bottom: 1rem;
+}
+  
+.Settings label {
+  display: inline-block;
+  width: 150px;
+  font-size: 1rem;
+}
+  
+.Settings input {
+  padding: .8rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.Settings button {
+  margin-top: 1rem;
+  background-color: #2196f3;
+}
+
+.Settings button:hover {
+  background-color: #1976d2;
+  transform: translateY(2px) scale(1.02);
+}
