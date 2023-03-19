@@ -30,7 +30,7 @@ const LetterCard = ({ letter, index, onLetterSwap, feedback, gameResult }) => {
       item: { index },
       collect: (monitor) => {
         setIsDragging(monitor.isDragging());
-        setOpacity(monitor.isDragging() ? 0.4 : 1);
+        setOpacity(monitor.isDragging() ? 0.8 : 1);
       },
     }));
   
