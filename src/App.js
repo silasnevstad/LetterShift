@@ -19,8 +19,6 @@ const difficulties = {
   advanced: { wordLengths: [10, 11], remainingMoves: 8 },
 };
 
-// const categories = {
-
 
 function App() {
   const [settings, setSettings] = useState({ wordLength: 4, moveLimit: 5 });
