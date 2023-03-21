@@ -4,6 +4,8 @@ import WordDisplay from './Components/WordDisplay';
 import MoveCounter from './Components/MoveCounter';
 import Modal from './Components/Modal';
 import Settings from './Components/Settings';
+import ScrambleTitle from './Components/ScrambleTitle';
+import MinSwaps from './Components/MinSwaps';
 import nouns from './nouns.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
@@ -23,6 +25,7 @@ const difficulties = {
 function App() {
   const [settings, setSettings] = useState({ wordLength: 4, moveLimit: 5 });
   const [showSettings, setShowSettings] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const maxMoves = 5;
 
   const getRandomWord = (lengths) => {
@@ -72,10 +75,19 @@ function App() {
         [newWord[index1], newWord[index2]] = [newWord[index2], newWord[index1]];
         return newWord;
       });
-      if (index1 !== index2) { // Prevents the move counter from decreasing when the same letter is clicked twice
-        setRemainingMoves((prevMoves) => prevMoves - 1);
-      }
     }
+  };
+  
+  const handleWordSubmit = (word) => {
+    setCurrentWord(word.split(''));
+
+    if (currentWord.join('') === secretWord) {
+      setGameResult('win');
+    }
+  };
+
+  const decreaseMoveCounter = () => {
+    setRemainingMoves((prevMoves) => Math.max(prevMoves - 1, 0));
   };
 
   const checkAndUpdateFeedback = () => {
@@ -146,9 +158,14 @@ function App() {
     handleLetterSwap(randomIndex, currentWordIndex);
   };
 
+  
+  
 
   useEffect(() => {
-    checkAndUpdateFeedback();
+    console.log(isDragging)
+    if (!isDragging) {
+      checkAndUpdateFeedback();
+    }
   }, [currentWord]);
 
   useEffect(() => {
@@ -162,24 +179,25 @@ function App() {
 
   return (
     <div className="App">
-      <h1> Scrambled </h1>
+      <ScrambleTitle title={'Scrambled'}/>
 
       <WordDisplay
         word={currentWord}
         feedback={feedback}
         onLetterSwap={handleLetterSwap}
-        gameResult={gameResult}
+        decreaseMoveCounter={decreaseMoveCounter}
       />
       
       <br></br>
 
-      {gameResult === null && <div>
+      {gameResult === null &&
+      <div className='reveal-buttons'>
         <button onClick={revealWord} className="solve-btn"> Reveal Word </button>
         <button onClick={revealLetter} className="solve-btn"> Reveal Letter </button>
-      </div>
-      }
+      </div>}
 
-      {gameResult !== null && <div className="lost">
+      {gameResult !== null && 
+      <div className="button-container">
           <button onClick={() => { resetGame('beginner'); }}> Beginner </button>
           <button onClick={() => { resetGame('easy'); }}> Easy </button>
           <button onClick={() => { resetGame('medium'); }}> Meduim </button>
@@ -190,6 +208,7 @@ function App() {
       <br></br>
 
       <MoveCounter remainingMoves={remainingMoves} />
+      <MinSwaps completeWord={secretWord} scrambledWord={currentWord} />
 
       <button
       className="settings-toggle"

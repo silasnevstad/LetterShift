@@ -11,7 +11,8 @@ html, body {
   flex-direction: column;
   align-items: center;
   font-family: 'Arial', sans-serif;
-  background-color: #f0f0f0;
+  /* background-color: #f0f0f0; */
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
   height: 100vh;
   padding: 2rem;
 }
@@ -24,11 +25,26 @@ html, body {
   color: #424242;
 }
 
+/* Title */
 .App h1 {
-  font-size: 2.7rem;
+  font-size: 3rem;
+  font-weight: 700;
   color: #424242;
   margin-bottom: 2.5rem;
   margin-top: 0;
+  text-align: center;
+}
+
+.scramble-title {
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  font-size: 2em;
+}
+
+.scramble-letter {
+  position: relative;
+  white-space: pre;
 }
 
 .word-display {
@@ -39,7 +55,7 @@ html, body {
 }
 
 .letter-card {
-  background-color: #2196f3;
+  background-color: #2d98f0;
   color: white;
   border-radius: 8px;
   padding: 2rem;
@@ -49,7 +65,7 @@ html, body {
   transition: all 0.3s cubic-bezier(0.3, 1.5, 0.7, 1);
   z-index: 1;
   transform: translateY(0) scale(1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
 }
 
 .letter-card:hover {
@@ -65,7 +81,7 @@ html, body {
 .letter-card.dragging {
   cursor: grabbing;
   z-index: 2;
-  transform: translateY(-10px) scale(1.15);
+  transform: translateY(-10px) scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -81,11 +97,21 @@ html, body {
   background-color: #f44336;
 }
 
+.letter-card.clicked {
+  border: 3px solid #2196f3;
+  background-color: rgb(255, 173, 65, 1.5);
+}
+
 .move-counter,
 .feedback {
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   margin-top: 0.3rem;
+}
+
+.min-swap-counter {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 button {
@@ -97,7 +123,7 @@ button {
   font-size: 1.2rem;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.3, 1.5, 0.7, 1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
   margin: 0 0.5rem;
 }
 
@@ -117,17 +143,22 @@ button:hover {
 }
 
 .settings-toggle {
-  /* background-color: #fff; */
+  background-color: #2196f3;
+  border-radius: 40%;
+  padding: 15px;
   position: absolute;
   top: 1rem;
   right: 1rem;
-  /* font-size: 1.5rem; */
+  font-size: 1.5rem;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .settings-toggle:hover {
   transform: scale(1.1);
+  background-color: #1d7fcf;
 }
+
 
 .App-logo {
   height: 40vmin;
@@ -212,17 +243,41 @@ button:hover {
   
 .Settings input {
   padding: .8rem;
+  width: 3rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.Settings button {
-  margin-top: 1rem;
-  background-color: #2196f3;
+.button-container {
+  display: flex;
+  flex-direction: row;
 }
 
-.Settings button:hover {
-  background-color: #1976d2;
-  transform: translateY(2px) scale(1.02);
+.reveal-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+ /* add mobile styles here */
+@media (max-width: 768px) {
+  .App {
+    padding: 1rem;
+  }
+
+  .letter-card {
+    transform: scale(0.9);
+    margin: 0.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .letter-card:hover {
+    transform: scale(0.8) translateY(-3px);
+  }
+
+  .button-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
 }
