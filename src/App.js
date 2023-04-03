@@ -6,6 +6,7 @@ import Modal from './Components/Modal';
 import Settings from './Components/Settings';
 import ScrambleTitle from './Components/ScrambleTitle';
 import MinSwaps from './Components/MinSwaps';
+import Background from './Components/Background';
 import nouns from './nouns.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
@@ -179,6 +180,7 @@ function App() {
 
   return (
     <div className="App">
+      <Background />
       <ScrambleTitle title={'Scrambled'}/>
 
       <WordDisplay
