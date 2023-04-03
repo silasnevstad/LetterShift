@@ -1,0 +1,40 @@
+.shape {
+    position: absolute;
+    overflow: hidden;
+}
+
+@keyframes slideUp {
+    0% {
+        transform: translateY(100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
+}
+
+.shapeLeft {
+    top: 0;
+    left: 0;
+    width: 50%;
+    margin-top: -250px;
+    margin-left: -330px;
+    /* animation: slideUp .8s ease-out; */
+}
+
+.shapeRight {
+    top: -50;
+    right: 0;
+    width: 45%;
+    margin-top: 100px;
+    margin-right: -330px;
+    /* animation: slideUp .8s ease-out; */
+}
+
+.shapeBottom {
+    bottom: 0;
+    left: 0;
+    width: 40%;
+    margin-bottom: -300px;
+    margin-left: 0px;
+    /* animation: slideUp .8s ease-out; */
+}
