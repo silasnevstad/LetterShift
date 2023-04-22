@@ -10,7 +10,6 @@ import Background from './Components/Background';
 import nouns from './nouns.json';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { random } from 'fontawesome';
 
 const wordList = nouns.nouns;
 
@@ -26,8 +25,8 @@ const difficulties = {
 function App() {
   const [settings, setSettings] = useState({ wordLength: 4, moveLimit: 5 });
   const [showSettings, setShowSettings] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const maxMoves = 5;
+  const [showDiffButtons, setShowDiffButtons] = useState(true);
+  const [showDiffButtonsOnSolution, setShowDiffButtonsOnSolution] = useState(false);
 
   const getRandomWord = (lengths) => {
     while (true) {
@@ -60,11 +59,12 @@ function App() {
     return wordArray.join('');
   };
   
-
-  const [secretWord, setSecretWord] = useState(getRandomWord([4, 5]));
+  const [currentDifficulty, setCurrentDifficulty] = useState('easy');
+  const { wordLengths, remaining } = difficulties[currentDifficulty];
+  const [secretWord, setSecretWord] = useState(getRandomWord(wordLengths));
   const [scrambledWord, setScrambledWord] = useState(scrambleWord(secretWord));
   const [currentWord, setCurrentWord] = useState(scrambledWord.split(''));
-  const [remainingMoves, setRemainingMoves] = useState(maxMoves);
+  const [remainingMoves, setRemainingMoves] = useState(5);
   const [feedback, setFeedback] = useState(Array(secretWord.length).fill(false));
   const [gameResult, setGameResult] = useState(null);
 
@@ -76,14 +76,6 @@ function App() {
         [newWord[index1], newWord[index2]] = [newWord[index2], newWord[index1]];
         return newWord;
       });
-    }
-  };
-  
-  const handleWordSubmit = (word) => {
-    setCurrentWord(word.split(''));
-
-    if (currentWord.join('') === secretWord) {
-      setGameResult('win');
     }
   };
 
@@ -101,6 +93,7 @@ function App() {
   };
 
   const resetGame = (difficulty) => {
+    setCurrentDifficulty(difficulty);
     const { wordLengths, remainingMoves } = difficulties[difficulty];
     const newSecretWord = getRandomWord(wordLengths);
     const newScrambledWord = scrambleWord(newSecretWord);
@@ -163,10 +156,7 @@ function App() {
   
 
   useEffect(() => {
-    console.log(isDragging)
-    if (!isDragging) {
-      checkAndUpdateFeedback();
-    }
+    checkAndUpdateFeedback();
   }, [currentWord]);
 
   useEffect(() => {
@@ -193,19 +183,38 @@ function App() {
       <br></br>
 
       {gameResult === null &&
-      <div className='reveal-buttons'>
-        <button onClick={revealWord} className="solve-btn"> Reveal Word </button>
-        <button onClick={revealLetter} className="solve-btn"> Reveal Letter </button>
-      </div>}
+      <>
+        <div className='reveal-buttons'>
+          <button onClick={revealWord} className="solve-btn"> Reveal Word </button>
+          <button onClick={revealLetter} className="solve-btn"> Reveal Letter </button>
+        </div>
+        <div className="button-container" style = {{marginTop: '20px'}}>
+          {showDiffButtons && <>
+                <button onClick={() => { resetGame('beginner'); }}> Beginner </button>
+                <button onClick={() => { resetGame('easy'); }}> Easy </button>
+                <button onClick={() => { resetGame('medium'); }}> Meduim </button>
+                <button onClick={() => { resetGame('hard'); }}> Hard </button>
+                <button onClick={() => { resetGame('advanced'); }}> Advanced </button>
+              </>}
+        </div>
+      </>}
 
       {gameResult !== null && 
-      <div className="button-container">
-          <button onClick={() => { resetGame('beginner'); }}> Beginner </button>
-          <button onClick={() => { resetGame('easy'); }}> Easy </button>
-          <button onClick={() => { resetGame('medium'); }}> Meduim </button>
-          <button onClick={() => { resetGame('hard'); }}> Hard </button>
-          <button onClick={() => { resetGame('advanced'); }}> Advanced </button>
-        </div>}
+        <div className="button-container">
+            
+            {!showDiffButtonsOnSolution && <>
+              <button onClick={() => { resetGame(currentDifficulty); }}> Play Again </button>
+              <button onClick={() => { setShowDiffButtonsOnSolution(!showDiffButtonsOnSolution) }}> More </button>
+            </> }
+            {showDiffButtonsOnSolution && <>
+              <button onClick={() => { resetGame('beginner'); }}> Beginner </button>
+              <button onClick={() => { resetGame('easy'); }}> Easy </button>
+              <button onClick={() => { resetGame('medium'); }}> Meduim </button>
+              <button onClick={() => { resetGame('hard'); }}> Hard </button>
+              <button onClick={() => { resetGame('advanced'); }}> Advanced </button>
+            </>}
+          </div>
+        }
       
       <br></br>
 
@@ -216,7 +225,7 @@ function App() {
       className="settings-toggle"
       onClick={() => setShowSettings(!showSettings)}
       title="Toggle settings">
-        <FontAwesomeIcon icon={faCog} />
+        <FontAwesomeIcon icon={faCog} className="settings-icon" />
       </button>
 
       <Modal isOpen={showSettings} onClose={() => setShowSettings(false)}>
