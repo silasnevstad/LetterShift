@@ -25,7 +25,6 @@ const difficulties = {
 function App() {
   const [settings, setSettings] = useState({ wordLength: 4, moveLimit: 5 });
   const [showSettings, setShowSettings] = useState(false);
-  const [showDiffButtons, setShowDiffButtons] = useState(true);
   const [showDiffButtonsOnSolution, setShowDiffButtonsOnSolution] = useState(false);
 
   const getRandomWord = (lengths) => {
@@ -60,7 +59,7 @@ function App() {
   };
   
   const [currentDifficulty, setCurrentDifficulty] = useState('easy');
-  const { wordLengths, remaining } = difficulties[currentDifficulty];
+  const { wordLengths } = difficulties[currentDifficulty];
   const [secretWord, setSecretWord] = useState(getRandomWord(wordLengths));
   const [scrambledWord, setScrambledWord] = useState(scrambleWord(secretWord));
   const [currentWord, setCurrentWord] = useState(scrambledWord.split(''));
@@ -104,6 +103,8 @@ function App() {
     setRemainingMoves(remainingMoves);
     setFeedback(Array(newSecretWord.length).fill(false));
     setGameResult(null);
+    setShowSettings(false);
+    setShowDiffButtonsOnSolution(false);
   };
 
   const setCustomGame = (wordLength, moveLimit) => {
@@ -152,9 +153,6 @@ function App() {
     handleLetterSwap(randomIndex, currentWordIndex);
   };
 
-  
-  
-
   useEffect(() => {
     checkAndUpdateFeedback();
   }, [currentWord]);
@@ -189,13 +187,11 @@ function App() {
           <button onClick={revealLetter} className="solve-btn"> Reveal Letter </button>
         </div>
         <div className="button-container" style = {{marginTop: '20px'}}>
-          {showDiffButtons && <>
-                <button onClick={() => { resetGame('beginner'); }}> Beginner </button>
-                <button onClick={() => { resetGame('easy'); }}> Easy </button>
-                <button onClick={() => { resetGame('medium'); }}> Meduim </button>
-                <button onClick={() => { resetGame('hard'); }}> Hard </button>
-                <button onClick={() => { resetGame('advanced'); }}> Advanced </button>
-              </>}
+          <button onClick={() => { resetGame('beginner'); }} className={currentDifficulty === 'beginner' ? 'active' : ''}> Beginner </button>
+          <button onClick={() => { resetGame('easy'); }} className={currentDifficulty === 'easy' ? 'active' : ''}> Easy </button>
+          <button onClick={() => { resetGame('medium'); }} className={currentDifficulty === 'medium' ? 'active' : ''}> Meduim </button>
+          <button onClick={() => { resetGame('hard'); }} className={currentDifficulty === 'hard' ? 'active' : ''}> Hard </button>
+          <button onClick={() => { resetGame('advanced'); }} className={currentDifficulty === 'advanced' ? 'active' : ''}> Advanced </button>
         </div>
       </>}
 
@@ -207,11 +203,11 @@ function App() {
               <button onClick={() => { setShowDiffButtonsOnSolution(!showDiffButtonsOnSolution) }}> More </button>
             </> }
             {showDiffButtonsOnSolution && <>
-              <button onClick={() => { resetGame('beginner'); }}> Beginner </button>
-              <button onClick={() => { resetGame('easy'); }}> Easy </button>
-              <button onClick={() => { resetGame('medium'); }}> Meduim </button>
-              <button onClick={() => { resetGame('hard'); }}> Hard </button>
-              <button onClick={() => { resetGame('advanced'); }}> Advanced </button>
+                <button onClick={() => { resetGame('beginner'); }} className={currentDifficulty === 'beginner' ? 'active' : ''}> Beginner </button>
+                <button onClick={() => { resetGame('easy'); }} className={currentDifficulty === 'easy' ? 'active' : ''}> Easy </button>
+                <button onClick={() => { resetGame('medium'); }} className={currentDifficulty === 'medium' ? 'active' : ''}> Meduim </button>
+                <button onClick={() => { resetGame('hard'); }} className={currentDifficulty === 'hard' ? 'active' : ''}> Hard </button>
+                <button onClick={() => { resetGame('advanced'); }} className={currentDifficulty === 'advanced' ? 'active' : ''}> Advanced </button>
             </>}
           </div>
         }

@@ -136,6 +136,14 @@ button:hover {
   background-color: #1976d2;
 }
 
+.active {
+  background-color: #4caf50;
+}
+
+.active:hover {
+  background-color: #388e3c;
+}
+
 .solve-btn {
   background-color: #4caf50;
 }
